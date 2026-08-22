@@ -263,6 +263,101 @@
       </p>
     </div>
 
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+    SGC PREMONITION COMPARATIVE ANALYSIS SYSTEM  (Brand Org, tier 2)
+    How the backend actually works — read this before wiring anything up.
+    ═══════════════════════════════════════════════════════════════════════════
+
+    THE ONE THING MOST LIKELY TO TRIP YOU UP
+      The frontend does NOT send two brand profiles. It sends ONE — Brand B.
+      Brand A is already on the server: it is the signed-in account's own brand,
+      taken from their signup intake and from their most recent Brand Inception
+      analysis. Posting Brand A from the client would let a customer overwrite
+      their own scores, so the API ignores it entirely.
+
+    ENDPOINT
+      POST /api/compare-brands
+      Headers: Authorization: Bearer <accessToken>
+               Content-Type: application/json
+
+    WHAT THE FRONTEND SENDS  (all Brand B; only the name is required)
+      {
+        "brandId":                "…optional, defaults to the account's brand…",
+        "brand2_name":            "Northbound Press",
+        "brand2_description":     "An independent label pressing vinyl…",
+        "brand2_keywords":        "vinyl, independent label, touring",
+        "brand2_industry":        "Music",
+        "brand2_risk_indicators": "distribution delays, single supplier"
+      }
+
+    WHAT THE BACKEND DOES WITH IT
+      Brand B is scored through the SAME pipeline as Brand A — same provider,
+      same scoring engine, same five Matrix categories, same weights — so the
+      two sets of numbers are directly comparable rather than merely similar.
+      All comparison logic lives on the server. The frontend collects inputs
+      and renders the structured report it gets back.
+
+    WHAT COMES BACK  (201, and how it maps to the nine things we ask for)
+      Identity comparison ........ matrix.rows[key="identity"]  {brand1, brand2, gap, leader}
+      Strengths vs weaknesses .... matrix.brand1Leads[] / matrix.brand1Trails[]
+      Tone + audience ............ keywords.overlap[] and keywords.divergence
+                                   {brand1Only[], brand2Only[]} — shared vocabulary
+                                   is how tone and audience overlap is measured
+      Market positioning ......... industry {level, score, label, narrative}
+      Strategic gap analysis ..... matrix.widestGap, matrix.meanAbsGap
+      Opportunities vs risks ..... risk {brand1Index, brand2Index, delta, direction}
+      Long-term trajectory ....... verdict {code, label, note} — CONTESTED /
+                                   CONVERGENT / DIVERGENT / DISTINCT
+      Competitive score .......... scores {alignment, divergence}  (both 0-100)
+      Premonition forecast ....... recommendations[] {priority, title, finding, action}
+
+    TWO NUMBERS, NOT ONE — DO NOT COLLAPSE THEM IN THE UI
+      alignment and divergence are NOT complements; divergence is not
+      100 - alignment. Two brands can be strongly aligned (same industry, shared
+      vocabulary) while diverging sharply on capability — that is the most
+      useful case there is, and showing only one number throws it away.
+      Always render the pair together.
+
+    HONESTY FLAGS TO SURFACE, NOT HIDE
+      keywords.brand1Derived  Brand A never supplied keywords, so they are
+                              derived from its intake copy. Always true.
+      keywords.brand2Derived  Brand B left the keywords field blank, so theirs
+                              were derived from the description.
+      risk.evidenceNote       Brand A's risk is MEASURED by the predictive
+                              engine; Brand B's is SELF-REPORTED from the typed
+                              indicators. The delta is directional, not
+                              like-for-like. Show this caveat.
+      brand2.confidence       How much of the Brand B intake was actually filled
+                              in. A thin intake makes a soft comparison.
+
+    ERRORS WORTH HANDLING BY NAME
+      401 missing_token / invalid_token
+      402 subscription_required     not paying at all
+      402 plan_upgrade_required     paying, but on Brand Inception — the body
+                                    carries requiredPlan / requiredPlanPrice so
+                                    you can render an upgrade button
+      404 no_brand1_analysis        Brand Inception has never run; the comparison
+                                    is built on its scores, so send them there first
+      400 validation_error          carries a `fields` map for inline errors
+      429 rate_limited
+
+    RELATED ENDPOINTS
+      GET    /api/brands/:id/comparison-brand   read the saved Brand B
+      PUT    /api/brands/:id/comparison-brand   save Brand B without running
+      GET    /api/comparison/:id                one stored comparison
+      GET    /api/brands/:id/comparisons        comparison history
+
+    NOTE ON "THE AI"
+      With AI_PROVIDER=stub (the v1 default) scoring is deterministic — a hash
+      of the intake, not a model call. Same input always gives the same result,
+      which is deliberate: a customer who re-runs an unchanged comparison must
+      not see the numbers move. Setting AI_PROVIDER=llm swaps the provider in
+      without changing this contract or any of the fields above.
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+
     <!-- Rendered by app.js from GET /api/config, so the price on this page and
          the price Stripe actually charges can never disagree. The markup below
          is the no-JavaScript fallback. -->
