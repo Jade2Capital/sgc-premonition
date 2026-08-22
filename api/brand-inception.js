@@ -1,1 +1,2 @@
+import OpenAI from "openai";
 
