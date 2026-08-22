@@ -256,33 +256,74 @@
   <div class="wrap">
     <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
       <span class="eyebrow">Subscription</span>
-      <h2>One tier. Cancel anytime.</h2>
-    </div>
-
-    <div class="price-card reveal">
-      <div>
-        <span class="price-amount" id="price-amount">$9.99</span><span class="price-period">/month</span>
-      </div>
-      <p class="mt-4 muted">Premonition Basic — billed monthly, cancel from your dashboard.</p>
-
-      <ul class="price-list">
-        <li>Monthly brand scan across all five Premonition Matrix™ categories</li>
-        <li>Weighted narrative coherence score and tier</li>
-        <li>Crisis signal detection with severity and evidence</li>
-        <li>Trajectory forecast, comparing run against run</li>
-        <li>A fresh 30-day alignment plan every analysis</li>
-        <li>Sector benchmarking against other analysed brands</li>
-        <li>Full analysis history — the second month is worth more than the first</li>
-      </ul>
-
-      <a href="#signup" class="btn btn-primary btn-lg btn-block">
-        <span>Start Premonition for <span class="cta-price">$9.99/month</span></span>
-      </a>
-
-      <p class="mt-4 muted" style="font-size:.8rem;margin-bottom:0;">
-        Secure payment through Stripe. We never see your card details.
+      <h2>Two tiers. Cancel anytime.</h2>
+      <p>
+        Brand Inception analyses your brand. Brand Org does that and adds a comparative reading
+        against a second brand you choose.
       </p>
     </div>
+
+    <!-- Rendered by app.js from GET /api/config, so the price on this page and
+         the price Stripe actually charges can never disagree. The markup below
+         is the no-JavaScript fallback. -->
+    <div class="pricing-grid reveal" id="pricing-grid">
+
+      <div class="price-card plan-card" data-plan="inception">
+        <!-- Hidden badge, present so both cards start at the same height. -->
+        <span class="plan-badge placeholder" aria-hidden="true">—</span>
+        <span class="eyebrow">Tier 1</span>
+        <h3 class="plan-name">Brand Inception</h3>
+        <div>
+          <span class="price-amount" id="price-amount">$9.99</span><span class="price-period">/month</span>
+        </div>
+        <p class="muted mt-4">Analyse one brand across the Premonition Matrix™.</p>
+
+        <ul class="price-list">
+          <li>Monthly brand scan across all five Premonition Matrix™ categories</li>
+          <li>Weighted narrative coherence score and tier</li>
+          <li>Crisis signal detection with severity and evidence</li>
+          <li>Trajectory forecast, comparing run against run</li>
+          <li>A fresh 30-day alignment plan every analysis</li>
+          <li>Sector benchmarking against other analysed brands</li>
+          <li>Full analysis history</li>
+        </ul>
+
+        <a href="#signup" class="btn btn-ghost btn-block">
+          <span>Choose Brand Inception — $9.99/month</span>
+        </a>
+      </div>
+
+      <div class="price-card plan-card featured" data-plan="org">
+        <span class="plan-badge">Most complete</span>
+        <span class="eyebrow">Tier 2</span>
+        <h3 class="plan-name">Brand Org</h3>
+        <div>
+          <span class="price-amount">$19.99</span><span class="price-period">/month</span>
+        </div>
+        <p class="muted mt-4">
+          Everything in Brand Inception, plus comparative analysis against a second brand.
+        </p>
+
+        <ul class="price-list">
+          <li>Everything in Brand Inception</li>
+          <li>Brand Org Extras — register a second brand to compare against</li>
+          <li>Keyword overlap and keyword divergence</li>
+          <li>Risk delta between the two brands</li>
+          <li>Industry alignment reading</li>
+          <li>Side-by-side Premonition Matrix™ comparison</li>
+          <li>Alignment score and divergence score</li>
+          <li>Strategic recommendations drawn from the gap between them</li>
+        </ul>
+
+        <a href="#signup" class="btn btn-primary btn-block">
+          <span>Choose Brand Org — $19.99/month</span>
+        </a>
+      </div>
+    </div>
+
+    <p class="center muted mt-5" style="font-size:.8rem;margin-bottom:0;">
+      Secure payment through Stripe. We never see your card details.
+    </p>
   </div>
 </section>
 
@@ -303,6 +344,36 @@
 
     <div class="form-panel reveal">
       <form id="signup-form" novalidate>
+
+        <!-- ══ PLAN SELECTOR ══════════════════════════════════════════════
+             Someone who scrolled past pricing and started typing must still
+             be able to see and change which tier they are about to buy.
+             Sending a customer to Stripe for a price they never explicitly
+             picked is how chargebacks start.
+             Populated by app.js from GET /api/config; the markup below is the
+             no-JavaScript fallback.
+             ══════════════════════════════════════════════════════════════ -->
+        <fieldset class="plan-fieldset">
+          <legend>Choose your plan</legend>
+          <div class="plan-choice" id="plan-choice">
+            <label class="plan-option selected" data-plan="inception">
+              <input type="radio" name="plan" value="inception" checked>
+              <span class="plan-option-body">
+                <span class="plan-option-name">Brand Inception</span>
+                <span class="plan-option-price">$9.99/month</span>
+                <span class="plan-option-note">Analyse one brand across the Premonition Matrix™.</span>
+              </span>
+            </label>
+            <label class="plan-option" data-plan="org">
+              <input type="radio" name="plan" value="org">
+              <span class="plan-option-body">
+                <span class="plan-option-name">Brand Org</span>
+                <span class="plan-option-price">$19.99/month</span>
+                <span class="plan-option-note">Everything in Brand Inception, plus comparative analysis against a second brand.</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
 
         <div class="field-grid">
           <div class="field" data-field="name">
@@ -497,7 +568,7 @@
   <!-- IDs are quick-email / quick-password, NOT email / password.
        The main signup form above already uses id="email", and an id must be
        unique in a document. With two, document.getElementById('email') returns
-       only the first one — so this form could never read its own field. -->
+       only the FIRST one — so this form could never read its own field. -->
   <input id="quick-email" type="email" placeholder="Email" required />
   <input id="quick-password" type="password" placeholder="Password" required />
   <button type="submit">Sign Up</button>
@@ -506,10 +577,8 @@
 <script>
 async function signupUser(event) {
   event.preventDefault();
-
   const email = document.getElementById('quick-email').value;
   const password = document.getElementById('quick-password').value;
-
   // Absolute URL, not '/api/signup'. This page is served by Vercel; the API
   // runs on Render. A relative path asks Vercel for /api/signup, which does not
   // exist there, so it answers with an HTML 404 and response.json() throws.
@@ -532,12 +601,10 @@ async function signupUser(event) {
     catch { data = { error: 'non_json_response', status: response.status, body: text.slice(0, 200) }; }
 
     console.log(data);
-
     if (!response.ok) {
       console.warn('Signup failed:', response.status, data);
       return;
     }
-
     // OPTIONAL: redirect to dashboard after signup
     // window.location.href = "dashboard.html?token=" + encodeURIComponent(data.accessToken);
   } catch (err) {
@@ -547,4 +614,3 @@ async function signupUser(event) {
 </script>
 </body>
 </html>
-
