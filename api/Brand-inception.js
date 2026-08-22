@@ -1,4 +1,3 @@
-
 Vercel API Backend Routes
 api/brand-inception.js
 import OpenAI from "openai";
