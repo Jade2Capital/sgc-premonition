@@ -492,5 +492,58 @@
 
 <script src="config.js"></script>
 <script src="app.js"></script>
+
+<form onsubmit="signupUser(event)">
+  <!-- IDs are quick-email / quick-password, NOT email / password.
+       The main signup form above already uses id="email", and an id must be
+       unique in a document. With two, document.getElementById('email') returns
+       only the first one — so this form could never read its own field. -->
+  <input id="quick-email" type="email" placeholder="Email" required />
+  <input id="quick-password" type="password" placeholder="Password" required />
+  <button type="submit">Sign Up</button>
+</form>
+
+<script>
+async function signupUser(event) {
+  event.preventDefault();
+
+  const email = document.getElementById('quick-email').value;
+  const password = document.getElementById('quick-password').value;
+
+  // Absolute URL, not '/api/signup'. This page is served by Vercel; the API
+  // runs on Render. A relative path asks Vercel for /api/signup, which does not
+  // exist there, so it answers with an HTML 404 and response.json() throws.
+  // SGC_CONFIG.API_BASE comes from config.js and already points at the backend.
+  const url = (typeof SGC_CONFIG !== 'undefined')
+    ? SGC_CONFIG.API_BASE + '/api/signup'
+    : '/api/signup';
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    // Never call .json() blind — an error page is HTML and will throw here.
+    const text = await response.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch { data = { error: 'non_json_response', status: response.status, body: text.slice(0, 200) }; }
+
+    console.log(data);
+
+    if (!response.ok) {
+      console.warn('Signup failed:', response.status, data);
+      return;
+    }
+
+    // OPTIONAL: redirect to dashboard after signup
+    // window.location.href = "dashboard.html?token=" + encodeURIComponent(data.accessToken);
+  } catch (err) {
+    console.error('Could not reach the API:', err.message);
+  }
+}
+</script>
 </body>
 </html>
