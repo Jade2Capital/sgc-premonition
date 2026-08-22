@@ -50,26 +50,22 @@
   <div class="wrap">
     <span class="eyebrow">The PR Intelligence Subdivision of SGC</span>
 
-    <!-- THE LOGO IS THE PAGE'S <h1>.
-         The artwork already carries the "SGC PREMONITION" wordmark and the
-         "PR Intelligence • AI Foresight • Brand Protection" tagline, so the
-         text versions that used to sit here have been removed — otherwise the
-         page prints the same words twice, once as an image and once as text.
-         The alt attribute carries that wording for screen readers and search
-         engines, which is why the <h1> is still a real heading.
+    <!-- Bear cover image — centered, above the wordmark.
+         Styled by .cover-bear in styles.css. -->
+    <img src="Images/logo.png" alt="SGC Premonition Bear" class="cover-bear">
 
-         <picture> serves the 170 KB WebP to every modern browser and falls
-         back to the PNG for anything older. A 1 MB+ hero image is a real cost
-         on a phone, and this is the first thing every visitor loads. -->
-    <h1 class="hero-logo">
-      <picture>
-        <source srcset="Images/logo.webp" type="image/webp">
-        <img src="Images/logo.png"
-             alt="SGC Premonition — PR Intelligence, AI Foresight, Brand Protection"
-             width="1000" height="1000"
-             fetchpriority="high" decoding="async">
-      </picture>
+    <h1>
+      SGC
+      <span class="hero-word">PREMONITION</span>
     </h1>
+
+    <div class="hero-tagline">
+      <span>PR Intelligence</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span>AI Foresight</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span>Brand Protection</span>
+    </div>
 
     <p class="hero-lede">
       Premonition applies SGC's identity architecture to real-world brands. It analyses your brand,
