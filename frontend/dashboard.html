@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Premonition Dashboard — SGC</title>
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%236d44ff'/><text y='68' x='50' text-anchor='middle' font-size='52' font-family='sans-serif' font-weight='bold' fill='white'>S</text></svg>">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">SGC</div>
+      <div>
+        <div class="brand-name">Premonition</div>
+        <div class="brand-sub">Dashboard</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#" id="nav-disclaimer">Disclaimer</a>
+      <a href="#" id="nav-billing" class="hidden">Manage billing</a>
+      <a href="#" id="nav-signout" class="hidden">Sign out</a>
+    </div>
+  </div>
+</nav>
+
+<main class="dash">
+  <div class="wrap">
+
+    <!-- ════════════════════════════════════════════════════════════════
+         STATE A — loading
+         ════════════════════════════════════════════════════════════════ -->
+    <div class="state" id="state-loading">
+      <div class="spinner-lg" aria-hidden="true"></div>
+      <h3>Loading your Premonition</h3>
+      <p class="muted">Fetching your brand, subscription, and latest analysis.</p>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         STATE B — no access token
+         ════════════════════════════════════════════════════════════════ -->
+    <div class="state hidden" id="state-noauth">
+      <span class="eyebrow" style="justify-content:center;">Access required</span>
+      <h3>We could not find your access link</h3>
+      <p class="muted">
+        Your dashboard is reached with a personal access link that was saved in your browser when
+        you signed up. If you are on a new device or cleared your browser data, that link is gone.
+      </p>
+      <div class="hero-cta">
+        <a href="index.html#signup" class="btn btn-primary">Sign up</a>
+        <button class="btn btn-ghost" id="paste-token-btn">Paste an access link</button>
+      </div>
+      <div class="form-panel mt-6 hidden" id="paste-token-panel" style="max-width:520px;">
+        <div class="field">
+          <label for="manual-token">Access token</label>
+          <input type="text" id="manual-token" placeholder="Paste the token from your dashboard link">
+          <span class="hint">It is the long string after <code>?token=</code> in your link.</span>
+        </div>
+        <button class="btn btn-primary btn-block" id="manual-token-btn">Open dashboard</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         STATE C — payment pending (webhook has not landed yet)
+         ════════════════════════════════════════════════════════════════ -->
+    <div class="state hidden" id="state-pending">
+      <div class="spinner-lg" aria-hidden="true"></div>
+      <h3>Confirming your subscription</h3>
+      <p class="muted">
+        Stripe is letting us know your payment went through. This normally takes a few seconds.
+      </p>
+      <p class="muted mono" style="font-size:.8rem;" id="pending-attempts"></p>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         STATE D — signed in, not subscribed
+         ════════════════════════════════════════════════════════════════ -->
+    <div class="state hidden" id="state-unpaid">
+      <span class="eyebrow" style="justify-content:center;">Subscription required</span>
+      <h3 id="unpaid-title">Your subscription is not active</h3>
+      <p class="muted" id="unpaid-body">
+        Your account exists, but Premonition analyses require an active subscription.
+      </p>
+      <button class="btn btn-primary btn-lg" id="resume-checkout">
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="btn-text">Start Premonition for $9.99/month</span>
+      </button>
+      <div class="form-status" id="unpaid-status" role="status" aria-live="polite"></div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         STATE E — the dashboard proper
+         ════════════════════════════════════════════════════════════════ -->
+    <div class="hidden" id="state-dashboard">
+
+      <header class="dash-head">
+        <div>
+          <span class="eyebrow">Premonition Dashboard</span>
+          <h1 id="brand-title">Your brand</h1>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s3);">
+            <span class="chip" id="chip-profile">Profile</span>
+            <span class="chip" id="chip-sector">Sector</span>
+            <span class="chip good" id="chip-status">Active</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:var(--s2);flex-wrap:wrap;">
+          <button class="btn btn-ghost" id="print-btn">Print report</button>
+          <button class="btn btn-primary" id="run-btn">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="btn-text">Run new analysis</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="form-status" id="dash-status" role="status" aria-live="polite"></div>
+
+      <!-- No analysis yet -->
+      <div class="card hidden" id="no-run">
+        <div class="state" style="padding:var(--s7) var(--s4);">
+          <h3>No analysis yet</h3>
+          <p class="muted">
+            Your brand is registered and your subscription is active. Run your first analysis to get
+            your Premonition Matrix™ scores, crisis signals, trajectory, and 30-day alignment plan.
+          </p>
+          <button class="btn btn-primary btn-lg" id="first-run-btn">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="btn-text">Run my first analysis</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="hidden" id="results">
+        <div class="dash-grid">
+
+          <!-- ── LEFT COLUMN ────────────────────────────────────────── -->
+          <div>
+            <div class="card score-hero">
+              <div>
+                <span class="score-num" id="overall-score">—</span><span class="score-den">/100</span>
+              </div>
+              <div class="score-tier" id="tier-label">—</div>
+              <div class="score-tier-note" id="tier-note"></div>
+              <div class="mt-5" style="display:flex;justify-content:center;">
+                <span class="chip" id="trajectory-chip">—</span>
+              </div>
+              <p class="muted mt-4" style="font-size:.82rem;margin-bottom:0;" id="trajectory-notes"></p>
+            </div>
+
+            <div class="card" id="history-card">
+              <h3>Score history</h3>
+              <div class="spark" id="spark"></div>
+              <p class="muted mt-4" style="font-size:.8rem;margin-bottom:0;" id="history-note"></p>
+            </div>
+
+            <div class="card" id="confidence-card">
+              <h3>Confidence</h3>
+              <div style="display:flex;align-items:baseline;gap:var(--s3);">
+                <span style="font-size:1.6rem;font-weight:650;" id="confidence-label">—</span>
+                <span class="mono muted" id="confidence-intake"></span>
+              </div>
+              <p class="muted mt-4" style="font-size:.85rem;margin-bottom:0;" id="confidence-note"></p>
+            </div>
+          </div>
+
+          <!-- ── RIGHT COLUMN ───────────────────────────────────────── -->
+          <div>
+            <div class="card">
+              <h3>Overview</h3>
+              <p id="overview-text" style="margin-bottom:0;"></p>
+            </div>
+
+            <div class="card">
+              <h3>Premonition Matrix™ breakdown</h3>
+              <div id="bars"></div>
+            </div>
+
+            <div class="card" id="risk-card">
+              <h3>Crisis signals</h3>
+              <div id="risk-flags"></div>
+            </div>
+
+            <div class="card">
+              <h3>Strengths</h3>
+              <ul class="point-list plus" id="strengths"></ul>
+            </div>
+
+            <div class="card">
+              <h3>Weaknesses</h3>
+              <ul class="point-list minus" id="weaknesses"></ul>
+            </div>
+
+            <div class="card">
+              <h3>30-day alignment plan</h3>
+              <div id="plan"></div>
+            </div>
+
+            <div class="card" id="benchmark-card">
+              <h3>Sector benchmark</h3>
+              <div id="benchmark"></div>
+            </div>
+
+            <div class="card">
+              <h3>Next analysis</h3>
+              <p id="next-analysis" style="margin-bottom:0;"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Always visible, always at the bottom -->
+      <div class="disclaimer-banner mt-6" id="advisory-notice">
+        <strong>Advisory only.</strong> SGC Premonition is an AI-powered brand intelligence system.
+        Its outputs are generated algorithmically and may not reflect complete, accurate, or
+        context-specific information. It does not provide legal, regulatory, compliance, crisis
+        management, or professional PR services. All recommendations should be reviewed by qualified
+        professionals before implementation. STC and Jade 2 Capital disclaim all liability for
+        decisions made or actions taken based on the system's insights.
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Disclaimer modal (same content as the landing page) -->
+<div class="modal" id="disclaimer-modal" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title">
+  <div class="modal-box">
+    <span class="eyebrow">Legal</span>
+    <h2 id="disclaimer-title">Disclaimer &amp; Limitations</h2>
+    <ol id="disclaimer-points">
+      <li>SGC Premonition is an AI advisory tool.</li>
+      <li>Outputs are generated algorithmically and may not reflect complete, accurate, or context-specific information.</li>
+      <li>It does not provide legal, regulatory, compliance, crisis management, or professional PR services.</li>
+      <li>All recommendations should be reviewed by qualified professionals before implementation.</li>
+      <li>STC and Jade 2 Capital disclaim all liability for decisions made or actions taken based on the system's insights.</li>
+    </ol>
+    <div class="modal-close">
+      <button class="btn btn-ghost" data-close-modal>Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>
