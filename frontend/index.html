@@ -1,69 +1,469 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SGC Premonition – AI Brand Intelligence</title>
-    <link rel="stylesheet" href="styles.css" />
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SGC Premonition — PR Intelligence • AI Foresight • Brand Protection</title>
+  <meta name="description" content="SGC Premonition is an AI brand intelligence system. It analyses brands, scores narrative coherence across the Premonition Matrix, detects crisis signals, and returns a 30-day alignment plan. $9.99/month.">
 
+  <!-- Social preview -->
+  <meta property="og:title" content="SGC Premonition">
+  <meta property="og:description" content="PR Intelligence • AI Foresight • Brand Protection">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%236d44ff'/><text y='68' x='50' text-anchor='middle' font-size='52' font-family='sans-serif' font-weight='bold' fill='white'>S</text></svg>">
+</head>
 <body>
 
-    <header>
-        <h1>SGC Premonition</h1>
-        <p class="subtitle">PR Intelligence • AI Foresight • Brand Protection</p>
-    </header>
+<!-- ══════════════════════════════════════════════════════════════════════
+     NAVIGATION
+     ══════════════════════════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <!-- Deliberately NOT logo.png — the full poster is unreadable at 30px.
+           See the "Why the nav does NOT use logo.png" note in styles.css. -->
+      <div class="brand-mark">SGC</div>
+      <div>
+        <div class="brand-name">Premonition</div>
+        <div class="brand-sub">PR Intelligence Subdivision</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#matrix">The Matrix</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#" id="nav-disclaimer">Disclaimer</a>
+      <a href="#signup" class="btn btn-primary">Start Premonition</a>
+    </div>
+  </div>
+</nav>
 
-    <section class="matrix-section">
-        <h2>The Premonition Matrix™</h2>
-        <p>Select your primary profile type when signing up.</p>
 
-        <ul class="matrix-list">
-            <li><strong>Influence</strong> – Public presence & perception</li>
-            <li><strong>Identity</strong> – Brand DNA & narrative</li>
-            <li><strong>Infrastructure</strong> – Operational strength</li>
-            <li><strong>Intelligence</strong> – Predictive insight</li>
-            <li><strong>Impact</strong> – Measurable outcomes</li>
-        </ul>
-    </section>
+<!-- ══════════════════════════════════════════════════════════════════════
+     HERO
+     ══════════════════════════════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">The PR Intelligence Subdivision of SGC</span>
 
-    <section class="signup-section">
-        <h2>Start Premonition</h2>
-        <p class="price">Only $9.99/month</p>
+    <!-- THE LOGO IS THE PAGE'S <h1>.
+         The artwork already carries the "SGC PREMONITION" wordmark and the
+         "PR Intelligence • AI Foresight • Brand Protection" tagline, so the
+         text versions that used to sit here have been removed — otherwise the
+         page prints the same words twice, once as an image and once as text.
+         The alt attribute carries that wording for screen readers and search
+         engines, which is why the <h1> is still a real heading.
 
-        <form id="signup-form">
+         <picture> serves the 170 KB WebP to every modern browser and falls
+         back to the PNG for anything older. A 1 MB+ hero image is a real cost
+         on a phone, and this is the first thing every visitor loads. -->
+    <h1 class="hero-logo">
+      <picture>
+        <source srcset="Images/logo.webp" type="image/webp">
+        <img src="Images/logo.png"
+             alt="SGC Premonition — PR Intelligence, AI Foresight, Brand Protection"
+             width="1000" height="1000"
+             fetchpriority="high" decoding="async">
+      </picture>
+    </h1>
 
-            <label>Name</label>
-            <input type="text" id="name" required />
+    <p class="hero-lede">
+      Premonition applies SGC's identity architecture to real-world brands. It analyses your brand,
+      evaluates identity consistency, scores narrative coherence, detects crisis signals, and
+      predicts where your narrative is heading — before it gets there.
+    </p>
 
-            <label>Email</label>
-            <input type="email" id="email" required />
+    <div class="hero-cta">
+      <a href="#signup" class="btn btn-primary btn-lg">
+        <span>Start Premonition for <span id="cta-price">$9.99/month</span></span>
+      </a>
+      <a href="#matrix" class="btn btn-ghost btn-lg">See the Matrix</a>
+    </div>
 
-            <label>Brand Name</label>
-            <input type="text" id="brand_name" required />
+    <!-- The five capabilities, mirroring the SGC Premonition key art -->
+    <div class="capabilities reveal">
+      <div class="capability">
+        <h4>See What's Coming</h4>
+        <p>Identify emerging narratives and shifting conversations before they break.</p>
+      </div>
+      <div class="capability">
+        <h4>Anticipate Risk</h4>
+        <p>Predict issues and threats to your brand reputation before they escalate.</p>
+      </div>
+      <div class="capability">
+        <h4>Influence Outcomes</h4>
+        <p>Leverage intelligence to shape perception and drive positive narratives forward.</p>
+      </div>
+      <div class="capability">
+        <h4>Protect Reputation</h4>
+        <p>Strengthen resilience and safeguard trust in a world of constant change.</p>
+      </div>
+      <div class="capability">
+        <h4>Lead the Narrative</h4>
+        <p>Turn insight into action and lead the conversation with confidence.</p>
+      </div>
+    </div>
+  </div>
+</header>
 
-            <label>Sector</label>
-            <input type="text" id="sector" required />
 
-            <label>Region</label>
-            <input type="text" id="region" required />
+<!-- ══════════════════════════════════════════════════════════════════════
+     THE PREMONITION MATRIX™
+     Cards are rendered by app.js from GET /api/matrix, so the copy on this
+     page and the weights in the scoring engine can never drift apart.
+     The markup below is a no-JavaScript fallback.
+     ══════════════════════════════════════════════════════════════════════ -->
+<section id="matrix">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">The Framework</span>
+      <h2>The Premonition Matrix™</h2>
+      <p>
+        Every brand is evaluated across five categories. Each is scored 0&ndash;100, then weighted
+        into a single overall reading and a tier. At signup you choose the category that matters
+        most to you — and Premonition weights your analysis toward it.
+      </p>
+    </div>
 
-            <label>Short Brand Description</label>
-            <textarea id="description" required></textarea>
+    <div class="matrix-grid" id="matrix-grid">
+      <!-- Fallback content, replaced by app.js once /api/matrix responds -->
+      <div class="matrix-card">
+        <span class="matrix-num">01</span>
+        <h3>Influence</h3>
+        <p class="q">How visible, trusted, and impactful is this brand in the public arena?</p>
+        <p>How a brand shows up in the world and how effectively it shapes public perception.</p>
+      </div>
+      <div class="matrix-card">
+        <span class="matrix-num">02</span>
+        <h3>Identity</h3>
+        <p class="q">Does this brand have a clear, compelling, and differentiated sense of self?</p>
+        <p>The internal DNA of the brand — the story it tells and the values it stands on.</p>
+      </div>
+      <div class="matrix-card">
+        <span class="matrix-num">03</span>
+        <h3>Infrastructure</h3>
+        <p class="q">Is this brand structurally strong enough to support growth, influence, and trust?</p>
+        <p>The operational backbone that supports the brand's promises.</p>
+      </div>
+      <div class="matrix-card">
+        <span class="matrix-num">04</span>
+        <h3>Intelligence</h3>
+        <p class="q">How well does this brand perceive the landscape, and how prepared is it for what's coming?</p>
+        <p>The analytical and predictive engine of the brand — the part that sees ahead.</p>
+      </div>
+      <div class="matrix-card">
+        <span class="matrix-num">05</span>
+        <h3>Impact</h3>
+        <p class="q">Is this brand creating tangible, positive results that validate its strategy?</p>
+        <p>The real-world results of the brand's actions.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <label>Primary Premonition Profile Type</label>
-            <select id="profile_type" required>
-                <option value="influence">Influence</option>
-                <option value="identity">Identity</option>
-                <option value="infrastructure">Infrastructure</option>
-                <option value="intelligence">Intelligence</option>
-                <option value="impact">Impact</option>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     WHAT YOU GET
+     ══════════════════════════════════════════════════════════════════════ -->
+<section id="what">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">The Output</span>
+      <h2>A diagnostic, not a dashboard</h2>
+      <p>
+        Every analysis returns the same seven sections, so you can compare this month against last
+        month rather than starting over each time.
+      </p>
+    </div>
+
+    <div class="matrix-grid reveal">
+      <div class="matrix-card">
+        <span class="matrix-num">Report</span>
+        <h3>Score breakdown</h3>
+        <p>All five Matrix categories scored 0&ndash;100, with the weight each one carried in your
+          overall reading and how much it contributed.</p>
+      </div>
+      <div class="matrix-card">
+        <span class="matrix-num">Report</span>
+        <h3>Crisis signals</h3>
+        <p>Named risk flags with severity and the specific evidence that raised each one —
+          narrative incoherence, promise/delivery gaps, identity drift, unconverted effort.</p>
+      </div>
+      <div class="matrix-card">
+        <span class="matrix-num">Report</span>
+        <h3>Trajectory &amp; forecast</h3>
+        <p>Where the narrative is heading. On your first run this is read structurally; from your
+          second run onward it is a real period-over-period comparison.</p>
+      </div>
+      <div class="matrix-card">
+        <span class="matrix-num">Report</span>
+        <h3>30-day alignment plan</h3>
+        <p>Four weeks of specific actions aimed at your weakest categories, plus one week of
+          consolidation. Concrete verbs, not principles.</p>
+      </div>
+      <div class="matrix-card">
+        <span class="matrix-num">Report</span>
+        <h3>Sector benchmark</h3>
+        <p>Where you sit against other analysed brands in your sector — per category, by
+          percentile. Shown once there are enough peers to mean something.</p>
+      </div>
+      <div class="matrix-card">
+        <span class="matrix-num">Report</span>
+        <h3>Confidence rating</h3>
+        <p>How much the supplied evidence actually justifies the scores. Thin intake produces a
+          lower confidence rating rather than a confident guess.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PRICING
+     ══════════════════════════════════════════════════════════════════════ -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <span class="eyebrow">Subscription</span>
+      <h2>One tier. Cancel anytime.</h2>
+    </div>
+
+    <div class="price-card reveal">
+      <div>
+        <span class="price-amount" id="price-amount">$9.99</span><span class="price-period">/month</span>
+      </div>
+      <p class="mt-4 muted">Premonition Basic — billed monthly, cancel from your dashboard.</p>
+
+      <ul class="price-list">
+        <li>Monthly brand scan across all five Premonition Matrix™ categories</li>
+        <li>Weighted narrative coherence score and tier</li>
+        <li>Crisis signal detection with severity and evidence</li>
+        <li>Trajectory forecast, comparing run against run</li>
+        <li>A fresh 30-day alignment plan every analysis</li>
+        <li>Sector benchmarking against other analysed brands</li>
+        <li>Full analysis history — the second month is worth more than the first</li>
+      </ul>
+
+      <a href="#signup" class="btn btn-primary btn-lg btn-block">
+        <span>Start Premonition for <span class="cta-price">$9.99/month</span></span>
+      </a>
+
+      <p class="mt-4 muted" style="font-size:.8rem;margin-bottom:0;">
+        Secure payment through Stripe. We never see your card details.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     SIGNUP
+     ══════════════════════════════════════════════════════════════════════ -->
+<section id="signup">
+  <div class="wrap">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <span class="eyebrow">Brand Intake</span>
+      <h2>Start your analysis</h2>
+      <p>
+        The more you give the intake, the sharper the reading. Fields marked optional are not
+        required to start — but they measurably raise your confidence rating.
+      </p>
+    </div>
+
+    <div class="form-panel reveal">
+      <form id="signup-form" novalidate>
+
+        <div class="field-grid">
+          <div class="field" data-field="name">
+            <label for="name">Your name <span class="req">*</span></label>
+            <input type="text" id="name" name="name" autocomplete="name" required placeholder="Jane Okafor">
+            <span class="field-error"></span>
+          </div>
+
+          <div class="field" data-field="email">
+            <label for="email">Email <span class="req">*</span></label>
+            <input type="email" id="email" name="email" autocomplete="email" required placeholder="you@yourbrand.com">
+            <span class="field-error"></span>
+          </div>
+
+          <div class="field full" data-field="brand_name">
+            <label for="brand_name">Business / brand name <span class="req">*</span></label>
+            <input type="text" id="brand_name" name="brand_name" required placeholder="Iron Market Records">
+            <span class="field-error"></span>
+          </div>
+
+          <div class="field" data-field="sector">
+            <label for="sector">Sector</label>
+            <input type="text" id="sector" name="sector" placeholder="Music, Fintech, Hospitality…">
+            <span class="hint">Used for sector benchmarking.</span>
+            <span class="field-error"></span>
+          </div>
+
+          <div class="field" data-field="region">
+            <label for="region">Region</label>
+            <input type="text" id="region" name="region" placeholder="US, UK, EU, Global…">
+            <span class="field-error"></span>
+          </div>
+
+          <div class="field full" data-field="description">
+            <label for="description">Short brand description</label>
+            <textarea id="description" name="description"
+              placeholder="What you do, who you do it for, and what makes the way you do it different."></textarea>
+            <span class="hint">Aim for 60 words or more — shorter descriptions score lower on narrative clarity, and rightly so.</span>
+            <span class="field-error"></span>
+          </div>
+
+          <div class="field full" data-field="primary_profile_type">
+            <label for="primary_profile_type">Primary Premonition Profile <span class="req">*</span></label>
+            <select id="primary_profile_type" name="primary_profile_type" required>
+              <option value="">Choose the category that matters most to you…</option>
+              <option value="influence">Influence — how the brand shapes public perception</option>
+              <option value="identity">Identity — the internal DNA of the brand</option>
+              <option value="infrastructure">Infrastructure — the operational backbone</option>
+              <option value="intelligence">Intelligence — how well it sees ahead</option>
+              <option value="impact">Impact — the real-world results</option>
             </select>
+            <span class="hint">This is not cosmetic — your analysis is weighted toward the category you pick.</span>
+            <div class="profile-preview" id="profile-preview"></div>
+            <span class="field-error"></span>
+          </div>
+        </div>
 
-            <button type="submit" class="cta-button">Start Premonition</button>
-        </form>
-    </section>
+        <!-- Optional richer intake, collapsed by default so the form is not a wall -->
+        <details class="mt-4" style="margin-bottom:var(--s5);">
+          <summary style="cursor:pointer;color:var(--violet-2);font-size:.9rem;font-weight:600;">
+            Optional: add more intake to raise your confidence rating
+          </summary>
 
-    <script src="app.js"></script>
+          <div class="field-grid mt-5">
+            <div class="field" data-field="website_url">
+              <label for="website_url">Website</label>
+              <input type="text" id="website_url" name="website_url" placeholder="yourbrand.com">
+            </div>
+            <div class="field" data-field="tagline">
+              <label for="tagline">Tagline</label>
+              <input type="text" id="tagline" name="tagline" placeholder="Eight words or fewer.">
+            </div>
+            <div class="field full" data-field="social_links">
+              <label for="social_links">Social links</label>
+              <input type="text" id="social_links" name="social_links"
+                placeholder="instagram.com/you, x.com/you, linkedin.com/company/you">
+              <span class="hint">Comma separated.</span>
+            </div>
+            <div class="field full" data-field="mission">
+              <label for="mission">Mission</label>
+              <textarea id="mission" name="mission" style="min-height:72px;"
+                placeholder="One sentence. What the brand exists to do."></textarea>
+            </div>
+            <div class="field full" data-field="values">
+              <label for="values">Stated values</label>
+              <input type="text" id="values" name="values" placeholder="craft, transparency, speed">
+              <span class="hint">Comma separated. Without these, consistency can only be asserted, not measured.</span>
+            </div>
+            <div class="field full" data-field="audience_profile">
+              <label for="audience_profile">Audience profile</label>
+              <textarea id="audience_profile" name="audience_profile" style="min-height:72px;"
+                placeholder="Who this is for, specifically. 'Everyone' scores badly."></textarea>
+            </div>
+          </div>
+        </details>
+
+        <div class="disclaimer-banner" style="margin-bottom:var(--s5);">
+          <strong>Before you continue:</strong> SGC Premonition is an AI advisory tool. Its outputs
+          are generated algorithmically and may not reflect complete, accurate, or context-specific
+          information. It does not provide legal, regulatory, compliance, crisis management, or
+          professional PR services. <a href="#" id="inline-disclaimer">Read the full disclaimer</a>.
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit-btn">
+          <span class="spinner" aria-hidden="true"></span>
+          <span class="btn-text">Start Premonition for <span class="cta-price">$9.99/month</span></span>
+        </button>
+
+        <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+
+        <p class="center muted mt-4" style="font-size:.8rem;margin-bottom:0;">
+          You will be taken to Stripe to complete payment. Your subscription starts once payment succeeds.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="brand">
+          <div class="brand-mark">SGC</div>
+          <div>
+            <div class="brand-name">Premonition</div>
+            <div class="brand-sub">PR Intelligence Subdivision</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#matrix">The Matrix</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#signup">Sign up</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="#" id="footer-disclaimer">Disclaimer</a>
+      </div>
+    </div>
+
+    <div class="legal-text" id="legal-text">
+      <p>
+        SGC Premonition is an AI-powered brand intelligence system designed to assist users in
+        evaluating identity, narrative coherence, and public-facing messaging. The system's outputs
+        are generated algorithmically and may not reflect complete, accurate, or context-specific
+        information. SGC Premonition does not provide legal, regulatory, compliance, crisis
+        management, or professional PR services. All recommendations should be reviewed by qualified
+        professionals before implementation. STC and Jade 2 Capital disclaim all liability for
+        decisions made or actions taken based on the system's insights.
+      </p>
+      <p style="margin-bottom:0;">&copy; <span id="year">2026</span> SGC. The Premonition Matrix™ is a trademark of SGC.</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     DISCLAIMER MODAL
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="modal" id="disclaimer-modal" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title">
+  <div class="modal-box">
+    <span class="eyebrow">Legal</span>
+    <h2 id="disclaimer-title">Disclaimer &amp; Limitations</h2>
+
+    <ol id="disclaimer-points">
+      <li>SGC Premonition is an AI advisory tool.</li>
+      <li>Outputs are generated algorithmically and may not reflect complete, accurate, or context-specific information.</li>
+      <li>It does not provide legal, regulatory, compliance, crisis management, or professional PR services.</li>
+      <li>All recommendations should be reviewed by qualified professionals before implementation.</li>
+      <li>STC and Jade 2 Capital disclaim all liability for decisions made or actions taken based on the system's insights.</li>
+    </ol>
+
+    <p class="muted" style="font-size:.86rem;">
+      Premonition is designed to sharpen your judgement, not to replace it. Treat every score as a
+      prompt to look closer at something, and every recommendation as a hypothesis to test — not as
+      professional advice.
+    </p>
+
+    <div class="modal-close">
+      <button class="btn btn-ghost" data-close-modal>Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
